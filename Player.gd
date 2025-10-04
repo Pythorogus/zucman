@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 const WALK_SPEED = 5.0
 const SPRINT_SPEED = 8.0
+const CROUCH_SPEED = 2.0
 const JUMP_VELOCITY = 4.5
 const SENSITIVITY = 0.03
 const BOB_FREQ = 2.0
@@ -11,10 +12,12 @@ const FOV_CHANGE = 1.5
 
 @export var head: Node3D
 @export var collision: CollisionShape3D
+@export var mesh: MeshInstance3D
 @export var camera: Camera3D
 
 var speed
 var t_bob = 0.0
+var is_crouching = false
 
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -31,8 +34,24 @@ func _physics_process(delta: float) -> void:
 		velocity += get_gravity() * delta
 
 	# Handle jump.
-	if Input.is_action_just_pressed("jump") and is_on_floor():
+	if Input.is_action_just_pressed("jump") and is_on_floor() and !is_crouching:
 		velocity.y = JUMP_VELOCITY
+		
+	# Crouch
+	if Input.is_action_just_pressed("crouch") and is_on_floor():
+		is_crouching = !is_crouching
+		if is_crouching:
+			collision.scale.y = 0.5
+			collision.position.y = 0.5
+			mesh.scale.y = 0.5
+			mesh.position.y = 0.5
+			head.position.y = 0.75
+		else:
+			collision.scale.y = 1.0
+			collision.position.y = 1.0
+			mesh.scale.y = 1.0
+			mesh.position.y = 1.0
+			head.position.y = 1.5
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
@@ -40,8 +59,10 @@ func _physics_process(delta: float) -> void:
 	var direction := (head.transform.basis * transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 
 	speed = WALK_SPEED
-	if Input.is_action_pressed("sprint"):
+	if Input.is_action_pressed("sprint") and !is_crouching:
 		speed = SPRINT_SPEED
+	elif is_crouching:
+		speed = CROUCH_SPEED
 	
 	if is_on_floor():
 		if direction:
