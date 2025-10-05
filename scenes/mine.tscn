@@ -1,0 +1,36 @@
+[gd_scene load_steps=6 format=3 uid="uid://b43m6kq1t3hvt"]
+
+[ext_resource type="PackedScene" uid="uid://dsprjo8cjgn1v" path="res://assets/models/land_mine.glb" id="1_yym1a"]
+[ext_resource type="Script" uid="uid://dnsfdix45unu7" path="res://scripts/mine.gd" id="2_m55k0"]
+[ext_resource type="PackedScene" uid="uid://colfabnfohruf" path="res://assets/vfx/vfx_explosion.tscn" id="3_m55k0"]
+[ext_resource type="AudioStream" uid="uid://cjggmnsoxqi34" path="res://assets/sfx/mixkit-system-beep-buzzer-fail-2964.wav" id="4_j4qwv"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_yym1a"]
+height = 6.17025
+radius = 4.4262695
+
+[node name="Mine" node_paths=PackedStringArray("vfx_explosion", "model", "bip_sfx") instance=ExtResource("1_yym1a")]
+script = ExtResource("2_m55k0")
+vfx_explosion = NodePath("VfxExplosion")
+model = NodePath("Sketchfab_model")
+bip_sfx = NodePath("BipSFX")
+
+[node name="Sketchfab_model" parent="." index="0"]
+transform = Transform3D(0.2, 0, 0, 0, -8.742278e-09, 0.2, 0, -0.2, -8.742278e-09, 0, 0, 0)
+
+[node name="Area3D" type="Area3D" parent="." index="1"]
+collision_layer = 4
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D" index="0"]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.2, 0, 0.88752383, 0)
+shape = SubResource("CylinderShape3D_yym1a")
+
+[node name="VfxExplosion" parent="." index="2" instance=ExtResource("3_m55k0")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3155018, 0)
+
+[node name="BipSFX" type="AudioStreamPlayer3D" parent="." index="3"]
+stream = ExtResource("4_j4qwv")
+volume_db = -15.0
+
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

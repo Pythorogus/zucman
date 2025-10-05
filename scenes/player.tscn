@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://bikr6chtfhqf"]
+
+[ext_resource type="Script" uid="uid://b1qsts5ewakqf" path="res://scripts/player.gd" id="1_4flbx"]
+[ext_resource type="Texture2D" uid="uid://c6uucrktsc510" path="res://assets/img/—Pngtree—red blood splatter grunge background_9231186.png" id="2_g2els"]
+[ext_resource type="AudioStream" uid="uid://csadg4if17x1v" path="res://assets/sfx/rpg-sword-attack-combo-24-388941.mp3" id="3_qhqgy"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_onrkg"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qhqgy"]
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("head", "collision", "mesh", "head_camera", "blood_sfx", "body_mesh", "blood_decal", "death_camera")]
+collision_layer = 2
+script = ExtResource("1_4flbx")
+head = NodePath("Head")
+collision = NodePath("CollisionShape3D")
+mesh = NodePath("BodyMesh")
+head_camera = NodePath("Head/HeadCamera3D")
+blood_sfx = NodePath("BloodSFX")
+body_mesh = NodePath("BodyMesh")
+blood_decal = NodePath("BloodDecal")
+death_camera = NodePath("Head/DeathCamera3D")
+
+[node name="BodyMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_onrkg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CylinderShape3D_qhqgy")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="HeadCamera3D" type="Camera3D" parent="Head"]
+current = true
+
+[node name="DeathCamera3D" type="Camera3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 0.82041144, 0.57177365, 0, -0.57177365, 0.82041144, 0, 1.7221389, 4.8518314)
+
+[node name="Node3D" type="Node3D" parent="."]
+
+[node name="BloodDecal" type="Decal" parent="."]
+visible = false
+size = Vector3(4, 4, 4)
+texture_albedo = ExtResource("2_g2els")
+
+[node name="BloodSFX" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("3_qhqgy")
+volume_db = 11.538
