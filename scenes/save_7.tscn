@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b53xj856hbptw"]
+
+[ext_resource type="PackedScene" uid="uid://i4j7f8mreef2" path="res://assets/models/Save7.blend" id="1_iks2q"]
+
+[node name="Save7" instance=ExtResource("1_iks2q")]
+
+[node name="Camera" parent="." index="1"]
+visible = false

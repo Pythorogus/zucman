@@ -1,0 +1,20 @@
+[gd_scene load_steps=6 format=3 uid="uid://bkebs1hwp4m4c"]
+
+[ext_resource type="PackedScene" uid="uid://7p5ssjsnsgql" path="res://assets/models/MountainIsland.blend" id="1_4e3py"]
+[ext_resource type="Texture2D" uid="uid://c4q652kyjk2ng" path="res://assets/models/assets/hdrs/alien-planet-wit_ee12522f-1467-402d-be63-5b16d6bea2d5/alien-planet-with-red-sun_2K_cf5b81a7-7bc2-4de9-bc84-cb83190df316.exr" id="2_dw80h"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_mlfby"]
+panorama = ExtResource("2_dw80h")
+
+[sub_resource type="Sky" id="Sky_pwxqa"]
+sky_material = SubResource("PanoramaSkyMaterial_mlfby")
+
+[sub_resource type="Environment" id="Environment_abxtk"]
+background_mode = 2
+sky = SubResource("Sky_pwxqa")
+tonemap_mode = 2
+
+[node name="MountainIsland" instance=ExtResource("1_4e3py")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." index="0"]
+environment = SubResource("Environment_abxtk")
