@@ -1,9 +1,8 @@
-[gd_scene load_steps=71 format=4 uid="uid://d0l8vx386nuia"]
+[gd_scene load_steps=70 format=4 uid="uid://d0l8vx386nuia"]
 
 [ext_resource type="PackedScene" uid="uid://bikr6chtfhqf" path="res://scenes/player.tscn" id="1_f3sb7"]
 [ext_resource type="Texture2D" uid="uid://dsyf0v1mmjvbm" path="res://assets/hdri/horn-koppe_spring_4k.exr" id="1_fj7yv"]
 [ext_resource type="PackedScene" uid="uid://b43m6kq1t3hvt" path="res://scenes/mine.tscn" id="3_4wyf3"]
-[ext_resource type="PackedScene" uid="uid://b53xj856hbptw" path="res://scenes/save_7.tscn" id="3_71j4m"]
 [ext_resource type="PackedScene" uid="uid://cror01km7pvdk" path="res://scenes/laser.tscn" id="4_k0juu"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_f3sb7"]
@@ -714,8 +713,6 @@ environment = SubResource("Environment_tlwt5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.30102, 0, 26.92075)
 mines = NodePath("../Mines")
 
-[node name="Save7" parent="." instance=ExtResource("3_71j4m")]
-
 [node name="Mines" type="Node3D" parent="."]
 
 [node name="Mine" parent="Mines" instance=ExtResource("3_4wyf3")]
@@ -926,3 +923,5 @@ skeleton = NodePath("")
 transform = Transform3D(-5.7699033e-08, -3.5527137e-15, 2, -1.3199999, 1.9106857e-15, -8.7422784e-08, -2.5221048e-15, -1, -7.1054274e-15, 2.1283317, 3.7760653, 16.825062)
 mesh = SubResource("ArrayMesh_7t5mc")
 skeleton = NodePath("")
+
+[node name="test" type="Node" parent="."]
